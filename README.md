@@ -127,6 +127,7 @@ All source code and installers will be maintained here from 11-March-2020.
 	7.2.2.1 - (2023-06-21) 	Correct the Build Number for Win11-22H2 at line 13375
 	7.2.2.2 - (2023-06-22)	Update OEMLinks.xml to use the OSDeploy MS catalog.
 							Update our fork to use our OEMLinks.xml
+	7.2.2.3 - (2024-02-29)	Initial Support For W11-23H2
 	
 				
 						
