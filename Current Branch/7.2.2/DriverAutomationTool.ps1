@@ -135,6 +135,7 @@ param (
 	7.2.2.2 - (2023-06-22)	Update OEMLinks.xml to use the OSDeploy MS catalog.
 							Update our fork to use our OEMLinks.xml
 	7.2.2.3 - (2024-02-29)	Initial Support For W11-23H2
+	7.2.2.4 - (2024-02-29)  Fix for https://github.com/maurice-daly/DriverAutomationTool/issues/496 by adding entries for 22H2 and 23H2, updating path to softpaqs.
 	#>
 
 
@@ -14850,7 +14851,13 @@ AABJRU5ErkJgggs='))
 			if ($global:SkuValue -ne $null) {
 				# Windows Build Driver Switch
 				switch -Wildcard ($OS) {
-					"*21H2"	{
+					"*23H2"	{
+						$OS = "11.0.23h2"
+					}
+					"*22H2"	{ # OS provided is not fine-grained enough to differentiate between W11 22H2 and W10 22H2. We default to pulling the W10 BIOS and hope it's the same (or if not, you should be updating after imaging anyways)
+						$OS = "10.0.22h2"
+					}
+					"*21H2"	{ # OS provided is not fine-grained enough to differentiate between W11 21H2 and W10 21H2. We default to pulling the W10 BIOS and hope it's the same (or if not, you should be updating after imaging anyways)
 						$OS = "10.0.2009"
 					}
 					"*21H1"	{
@@ -14896,7 +14903,7 @@ AABJRU5ErkJgggs='))
 				global:Write-LogEntry -Value "- SystemID is $SKUValue" -Severity 1
 				global:Write-LogEntry -Value "- OS is $OS" -Severity 1
 				global:Write-LogEntry -Value "- Architecture is $Architecture" -Severity 1
-				$HPXMLCabinetSource = "http://ftp.hp.com/pub/caps-softpaq/cmit/imagepal/ref/" + $($($SKUValue.Split(",") | Select-Object -First 1) + "/" + $($SKUValue.Split(",") | Select-Object -First 1) + "_" + $($Architecture.TrimStart("x")) + "_" + $OS + ".cab")
+				$HPXMLCabinetSource = "https://hpia.hpcloud.hp.com/ref/" + $($($SKUValue.Split(",") | Select-Object -First 1) + "/" + $($SKUValue.Split(",") | Select-Object -First 1) + "_" + $($Architecture.TrimStart("x")) + "_" + $OS + ".cab")
 				global:Write-LogEntry -Value "- URL is $HPXMLCabinetSource" -Severity 1
 				# Try both credential and default methods
 				try {

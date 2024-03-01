@@ -128,7 +128,7 @@ All source code and installers will be maintained here from 11-March-2020.
 	7.2.2.2 - (2023-06-22)	Update OEMLinks.xml to use the OSDeploy MS catalog.
 							Update our fork to use our OEMLinks.xml
 	7.2.2.3 - (2024-02-29)	Initial Support For W11-23H2
-	
+	7.2.2.4 - (2024-02-29)  Fix for https://github.com/maurice-daly/DriverAutomationTool/issues/496 by adding entries for 22H2 and 23H2, updating path to softpaqs.
 				
 						
 
