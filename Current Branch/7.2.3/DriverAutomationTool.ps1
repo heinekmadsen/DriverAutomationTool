@@ -38,7 +38,7 @@ param (
     Author:      Maurice Daly
     Twitter:     @Modaly_IT
     Created:     2017-01-01
-    Updated:     2020-18-03
+    Updated:     2024-03-12
     
     Version history:
 	6.0.0 - (2018-03-29)	New verison. Graphical redesign, improved layout, HP individual driver downloads
@@ -102,36 +102,45 @@ param (
 							Fixed issues for Lenovo devices with long SKU listings with description change
 							Fixed issues with custom package creation not displaying the SKU value correctly
 							Tweak to MS model matching logic
-	6.4.3 - (2020-31-01)	OOB release to fix changes in HP driver extraction
-	6.4.4 - (2020-22-02)	Fixed issues with Lenovo driver extraction caused back packager change
+	6.4.3 - (2020-01-31)	OOB release to fix changes in HP driver extraction
+	6.4.4 - (2020-02-22)	Fixed issues with Lenovo driver extraction caused back packager change
 							Fixed issues with driver imports using native driver packages
 							Added support for zipped driver packages
-	6.4.5 - (2020-09-03)	Updated Dell Flash64w download location in order to download latest available build
+	6.4.5 - (2020-03-09)	Updated Dell Flash64w download location in order to download latest available build
 							Fixed UI elements not disabling in the admin control
 							Fixed OS selection on initial load not disabling Dell if the previous OS selection was a Windows 10 
 							build specific selection
 							Updated Find Model button to find but not select, and addded Find + Select button
-	6.4.6 - (2020-18-03)	Fixed Lenovo download link logic and added further output
+	6.4.6 - (2020-03-18)	Fixed Lenovo download link logic and added further output
 							Updated package creation for all packages just to include the SKU/BaseBoard values
 							Updated link within the tool to GitHub as Technet is being retired
 							Updated custom package creation to include Windows 10 1909		
-6.5.6 - (2021-20-08)	Updated manufacturer sources, with feeds from GitHub repo for imporoved maintenance
-						Fix for Microsoft Surface model detection on download
-						Fixes for other bugs and typos
-7.0.0 - (2021-19-11)	Support for Windows 11 and Windows 10 21H2
+6.5.6 - (2021-08-21)	New: Support for Windows 10 21H1
+							New: External source feeds from GitHub for Manufacturer and Model support
+							New: Updated fallback logic for Microsoft Surface devices
+						Fix: Bugs and typos
+7.0.0 - (2021-11-19)	Support for Windows 11 and Windows 10 21H2
 						Intune BIOS Control XML support
 7.0.4 - (2022-03-09)	Fix: HP SKU value issue causing description lenght exception
 			Fix: Dell BIOS download previously selecting old version where multiple downloads are found
 			New: WINRM over HTTPS option
-7.1.8 - (2022-01-09)	Microsoft Surface model download fixes.
-7.1.9 - (2022-22-09)	Added support for Windows 11 22H2
-7.2.0 - (2022-02-12)	Mostly bug fixes and Windows 10 22H2 support
-7.2.1 - (2022-20-12)	Added fix for Dell BIOS packages not showing in the CSV summary output
-7.2.2 - (2023-10-01)	Bug fixes
+7.1.8 - (2022-09-01)	Microsoft Surface model download fixes.
+7.1.9 - (2022-09-22)	Added support for Windows 11 22H2
+7.2.0 - (2022-12-02)	Mostly bug fixes and Windows 10 22H2 support
+7.2.1 - (2022-12-20)	Added fix for Dell BIOS packages not showing in the CSV summary output
+7.2.2 - (2023-01-10)	Bug fixes
 7.2.3 - (2024-25-02)	Added support for Windows 11 23H2. Please note that Microsoft Surface links for 23H2 will follow in the next update
 			Minor bug fixes
-			Compile order issue bugs resolved in hotfix with SHA 256 6b3e8a777bbc567b4be33be593d563109ce9ec205ba9a5864f90d6e4ad986b1b
+			Compile order issue bugs resolved in hotfix with SHA 256 6b3e8a777bbc567b4be33be593d563109ce9ec205ba9a5864f90d6e4ad986b1b	
 
+	Customizations
+	7.2.2.1 - (2023-06-21) 	Correct the Build Number for Win11-22H2 at line 13375
+	7.2.2.2 - (2023-06-22)	Update OEMLinks.xml to use the OSDeploy MS catalog.
+							Update our fork to use our OEMLinks.xml
+	7.2.2.3 - (2024-02-29)	Initial Support For W11-23H2
+	7.2.2.4 - (2024-02-29)  Fix for https://github.com/maurice-daly/DriverAutomationTool/issues/496 by adding entries for 22H2 and 23H2, updating path to softpaqs.
+	7.2.3.1 - (2024-03-12)	Merged previous customizations into 7.2.3
+							Fixed reintroduced bug with incorrect build numbers in $WindowsBuildHashTable
 	#>
 
 
@@ -10263,6 +10272,7 @@ aHlkaHlkaHlkaHlkaHlkaHlkaHlkaHlkaFnms68WxfyoJ3KVKAAAAABJRU5ErkJgggs='))
 	[void]$ConfigMgrPkgActionCombo.Items.Add('Move to Production')
 	[void]$ConfigMgrPkgActionCombo.Items.Add('Move to Pilot')
 	[void]$ConfigMgrPkgActionCombo.Items.Add('Mark as Retired')
+	[void]$ConfigMgrPkgActionCombo.Items.Add('Move to Windows 11 23H2')
 	[void]$ConfigMgrPkgActionCombo.Items.Add('Move to Windows 11 22H2')
 	[void]$ConfigMgrPkgActionCombo.Items.Add('Move to Windows 11')
 	[void]$ConfigMgrPkgActionCombo.Items.Add('Move to Windows 10 22H2')
@@ -13417,6 +13427,7 @@ AABJRU5ErkJgggs='))
 	$OperatingSystem.DefaultCellStyle = $System_Windows_Forms_DataGridViewCellStyle_25
 	$OperatingSystem.DisplayStyle = 'ComboBox'
 	$OperatingSystem.HeaderText = 'Operating System'
+	[void]$OperatingSystem.Items.Add('Windows 11 23H2')
 	[void]$OperatingSystem.Items.Add('Windows 11 22H2')
 	[void]$OperatingSystem.Items.Add('Windows 11 21H2')
 	[void]$OperatingSystem.Items.Add('Windows 10 22H2')
@@ -13598,7 +13609,7 @@ AABJRU5ErkJgggs='))
 	$ScriptBuildDate = "2024-02-25"
 	[version]$NewRelease = (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/maurice-daly/DriverAutomationTool/master/Data//DriverAutomationToolRev.txt" -UseBasicParsing).Content
 	$ReleaseNotesURL = "https://raw.githubusercontent.com/maurice-daly/DriverAutomationTool/master/Data/DriverAutomationToolNotes.txt"
-	$OEMLinksURL = "https://raw.githubusercontent.com/maurice-daly/DriverAutomationTool/master/Data/OEMLinks.xml"
+	$OEMLinksURL = "https://raw.githubusercontent.com/ajn142attamu/DriverAutomationTool/master/Data/OEMLinks.xml"
 	
 	# Proxy Validation Initial State
 	$global:ProxySettingsSet = $false
@@ -13620,8 +13631,8 @@ AABJRU5ErkJgggs='))
 	
 	# Windows Version Hash Table
 	$WindowsBuildHashTable = @{
-		'Win11-23H2' = "10.0.21631"
-		'Win11-22H2' = "10.0.21621"
+		'Win11-23H2' = "10.0.22631"
+		'Win11-22H2' = "10.0.22621"
 		'Win11-21H2' = "10.0.22000"
 		'22H2'	     = "10.0.19045.1"
 		'21H2'	     = "10.0.19044.1"
@@ -15044,7 +15055,13 @@ AABJRU5ErkJgggs='))
 			if ($global:SkuValue -ne $null) {
 				# Windows Build Driver Switch
 				switch -Wildcard ($OS) {
-					"*21H2"	{
+					"*23H2"	{
+						$OS = "11.0.23h2"
+					}
+					"*22H2"	{ # OS provided is not fine-grained enough to differentiate between W11 22H2 and W10 22H2. We default to pulling the W10 BIOS and hope it's the same (or if not, you should be updating after imaging anyways)
+						$OS = "10.0.22h2"
+					}
+					"*21H2"	{ # OS provided is not fine-grained enough to differentiate between W11 21H2 and W10 21H2. We default to pulling the W10 BIOS and hope it's the same (or if not, you should be updating after imaging anyways)
 						$OS = "10.0.2009"
 					}
 					"*21H1"	{
@@ -15090,7 +15107,7 @@ AABJRU5ErkJgggs='))
 				global:Write-LogEntry -Value "- SystemID is $SKUValue" -Severity 1
 				global:Write-LogEntry -Value "- OS is $OS" -Severity 1
 				global:Write-LogEntry -Value "- Architecture is $Architecture" -Severity 1
-				$HPXMLCabinetSource = "http://ftp.hp.com/pub/caps-softpaq/cmit/imagepal/ref/" + $($($SKUValue.Split(",") | Select-Object -First 1) + "/" + $($SKUValue.Split(",") | Select-Object -First 1) + "_" + $($Architecture.TrimStart("x")) + "_" + $OS + ".cab")
+				$HPXMLCabinetSource = "https://hpia.hpcloud.hp.com/ref/" + $($($SKUValue.Split(",") | Select-Object -First 1) + "/" + $($SKUValue.Split(",") | Select-Object -First 1) + "_" + $($Architecture.TrimStart("x")) + "_" + $OS + ".cab")
 				global:Write-LogEntry -Value "- URL is $HPXMLCabinetSource" -Severity 1
 				# Try both credential and default methods
 				try {
@@ -18614,6 +18631,9 @@ AABJRU5ErkJgggs='))
 				"*Retired*" {
 					$PackagePrefix = "$PackageType Retired "
 					$State = "retired"
+				}
+				"*Windows 11 23H2*"{
+					$Win11Version = "23H2"
 				}
 				"*Windows 11 22H2*"{
 					$Win11Version = "22H2"

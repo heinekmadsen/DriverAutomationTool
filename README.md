@@ -123,14 +123,16 @@ All source code and installers will be maintained here from 11-March-2020.
 	7.2.1 - (2022-12-20)	Added fix for Dell BIOS packages not showing in the CSV summary output
 	7.2.2 - (2023-01-10)	Bug fixes
 	7.2.3 - (2024-02-25)	Added support for Windows 11 23H2. Please note that Microsoft Surface links for 23H2 will follow in the next update
-				Minor bug fixes
-				Compile order issue bugs resolved in hotfix with SHA 256 6b3e8a777bbc567b4be33be593d563109ce9ec205ba9a5864f90d6e4ad986b1b
+							Minor bug fixes
+							Compile order issue bugs resolved in hotfix with SHA 256 6b3e8a777bbc567b4be33be593d563109ce9ec205ba9a5864f90d6e4ad986b1b
 	Customizations
 	7.2.2.1 - (2023-06-21) 	Correct the Build Number for Win11-22H2 at line 13375
 	7.2.2.2 - (2023-06-22)	Update OEMLinks.xml to use the OSDeploy MS catalog.
 							Update our fork to use our OEMLinks.xml
 	7.2.2.3 - (2024-02-29)	Initial Support For W11-23H2
 	7.2.2.4 - (2024-02-29)  Fix for https://github.com/maurice-daly/DriverAutomationTool/issues/496 by adding entries for 22H2 and 23H2, updating path to softpaqs.
+	7.2.3.1 - (2024-03-12)	Merged previous customizations into 7.2.3
+							Fixed reintroduced bug with incorrect build numbers in $WindowsBuildHashTable
 				
 						
 
