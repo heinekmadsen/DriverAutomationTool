@@ -115,7 +115,7 @@ param (
 							Updated package creation for all packages just to include the SKU/BaseBoard values
 							Updated link within the tool to GitHub as Technet is being retired
 							Updated custom package creation to include Windows 10 1909		
-	6.5.6 - (2021-21-08)	New: Support for Windows 10 21H1
+	6.5.6 - (2021-08-21)	New: Support for Windows 10 21H1
 							New: External source feeds from GitHub for Manufacturer and Model support
 							New: Updated fallback logic for Microsoft Surface devices
 							Fix: Bugs and typos
