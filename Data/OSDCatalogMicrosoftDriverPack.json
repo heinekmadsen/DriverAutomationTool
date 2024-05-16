@@ -1564,5 +1564,22 @@
         "OSReleaseId":  "1903",
         "OSBuild":  "18362",
         "HashMD5":  "D7B0642B775C9DB8CD3696EF1A823EC1"
+    }{
+        "CatalogVersion":  "23.03.17",
+        "Status":  null,
+        "Component":  "DriverPack",
+        "ReleaseDate":  "24.04.04",
+        "Manufacturer":  "Microsoft",
+        "Model":  "Surface Laptop 3",
+        "Product":  "Surface_Laptop_3_1872",
+        "Name":  "Microsoft Surface Laptop 3 15 Intel Win10 23H2",
+        "PackageID":  "100429",
+        "FileName":  "SurfaceLaptop3_Intel_Win11_22000_24.033.31351.0.msi",
+        "Url":  "https://download.microsoft.com/download/3/f/4/3f4f5dff-b6a9-4006-87aa-142a8e6f77cb/SurfaceLaptop3_Intel_Win11_22000_24.033.31351.0.msi",
+        "DownloadCenter":  "https://www.microsoft.com/en-us/download/details.aspx?id=100429",
+        "OSVersion":  "Windows 10 x64",
+        "OSReleaseId":  "23H2",
+        "OSBuild":  "22631",
+        "HashMD5":  "4FFBFE1CFF549B8148B76AFED91EF469"
     }
 ]
