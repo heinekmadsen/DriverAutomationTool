@@ -1564,7 +1564,8 @@
         "OSReleaseId":  "1903",
         "OSBuild":  "18362",
         "HashMD5":  "D7B0642B775C9DB8CD3696EF1A823EC1"
-    }{
+    },
+    {
         "CatalogVersion":  "23.03.17",
         "Status":  null,
         "Component":  "DriverPack",
